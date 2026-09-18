@@ -1,8 +1,8 @@
 ---
 layout: post
-date: 2016-01-15 07:59:00-0400
+date: 2025-04-13
 inline: true
 related_posts: false
 ---
 
-A simple inline announcement with Markdown emoji! :sparkles: :smile:
+Preprint on [hierarchical protein backbone generation](https://arxiv.org/abs/2504.09374) with latent and structure diffusion is on arXiv.
