@@ -1,0 +1,61 @@
+# Weekly: pull recent Instagram posts into the almondz collage.
+# Setup and secrets are described in README.md ("Instagram sync").
+name: Sync Instagram
+
+on:
+  schedule:
+    - cron: "0 15 * * 1" # Mondays, 15:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-instagram
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Fetch posts and rebuild collage
+        env:
+          INSTAGRAM_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
+          REFRESHED_TOKEN_FILE: ${{ runner.temp }}/ig_token
+        run: python3 scripts/sync_instagram.py
+
+      # Instagram may hand back a new token when it is refreshed. If a
+      # GH_SECRETS_TOKEN is configured, store it so the next run uses it.
+      - name: Save refreshed token
+        env:
+          GH_TOKEN: ${{ secrets.GH_SECRETS_TOKEN }}
+          OLD_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
+          TOKEN_FILE: ${{ runner.temp }}/ig_token
+        run: |
+          [ -s "$TOKEN_FILE" ] || exit 0
+          NEW_TOKEN=$(cat "$TOKEN_FILE")
+          echo "::add-mask::$NEW_TOKEN"
+          if [ "$NEW_TOKEN" = "$OLD_TOKEN" ]; then
+            echo "Token unchanged."
+          elif [ -n "$GH_TOKEN" ]; then
+            gh secret set INSTAGRAM_TOKEN --repo "$GITHUB_REPOSITORY" --body "$NEW_TOKEN"
+            echo "Stored refreshed token."
+          else
+            echo "::warning::Instagram returned a new token but GH_SECRETS_TOKEN is not set; update INSTAGRAM_TOKEN by hand before it expires."
+          fi
+          rm -f "$TOKEN_FILE"
+
+      - name: Commit changes
+        run: |
+          git add -A almondz.html images/almondz
+          if git diff --cached --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898333+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Sync Instagram posts to almondz collage"
+          git push

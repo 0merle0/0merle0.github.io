@@ -46,7 +46,7 @@ a:active { color: #ee0000; }
 .links a:hover, .links a:focus-visible { background-size: 100% 2px; }
 .links a[href="/"]:hover { color: #00a651; }
 .links a[href="publications.html"]:hover { color: #e4002b; }
-.links a[href="cv.html"]:hover { color: #d4a000; }
+.links a[href="cv.html"]:hover { color: #ffcc00; }
 .links a[href="almondz.html"]:hover { color: #9b30ff; }
 .links a[aria-current="page"] { color: #000; font-weight: bold; background-size: 100% 2px; }
 
@@ -81,6 +81,10 @@ h3 { font-size: 16px; margin: 14px 0 4px; }
   .portrait { width: 160px; }
 }
 
+/* No bullets anywhere: lists are plain stacked lines */
+main ul { list-style: none; padding-left: 0; }
+main li { margin-bottom: 6px; }
+
 .pubs li { margin-bottom: 10px; }
 .pub-title, .pub-authors, .pub-venue { display: block; }
 .pub-title { font-weight: bold; }
@@ -90,11 +94,20 @@ h3 { font-size: 16px; margin: 14px 0 4px; }
 /* Contact links: one row, wrapping on narrow screens */
 .contact-links { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 28px; }
 
-.gallery { display: flex; flex-wrap: wrap; gap: 12px; }
-.gallery figure { margin: 0; width: 220px; }
-.gallery img { width: 220px; height: 220px; object-fit: cover; border: 1px solid #000; transition: transform 0.2s ease; }
-.gallery img:hover { transform: scale(1.03); }
-.gallery figcaption { font-size: 14px; }
+/* almondz collage: square tiles with occasional 2x2 blocks, packed tightly */
+.collage {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-flow: dense;
+  gap: 6px;
+}
+.collage a { display: block; aspect-ratio: 1; overflow: hidden; border: 1px solid #000; }
+.collage a.big { grid-column: span 2; grid-row: span 2; }
+.collage img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s ease; }
+.collage a:hover img { transform: scale(1.05); }
+@media (max-width: 560px) {
+  .collage { grid-template-columns: repeat(2, 1fr); }
+}
 
 .site-footer { border-top: 1px solid #808080; margin-top: 24px; padding-top: 8px; font-size: 13px; color: #555; }
 
