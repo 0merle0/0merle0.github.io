@@ -1,0 +1,22 @@
+# GitHub Pages serves the gh-pages branch; keep it identical to main.
+name: Mirror main to gh-pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mirror-gh-pages
+  cancel-in-progress: true
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - run: git push --force origin HEAD:gh-pages
