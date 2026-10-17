@@ -1,6 +1,0 @@
-# Maps a coauthor's last name to alternate first-name spellings and a profile URL.
-# Entries here turn that author's name into a link in the publications list.
-# Example:
-# "baker":
-#   - firstname: ["David", "D."]
-#     url: https://www.bakerlab.org/

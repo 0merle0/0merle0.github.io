@@ -1,9 +1,0 @@
-github_users:
-  - 0merle0
-
-repo_description_lines_max: 2
-
-github_repos:
-  - 0merle0/cleo
-  - RosettaCommons/protein_generator
-  - RosettaCommons/RoseTTAFold2

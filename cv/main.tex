@@ -1,0 +1,121 @@
+\documentclass[letter]{res}
+
+\setlength{\textheight}{9.5in}
+\sectionskip=2.5ex plus 1ex minus .2ex
+%\usepackage{fontspec}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[utf8]{inputenc}
+\geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=20mm,
+ right=30mm,
+ top=12mm,
+ bottom=12mm,
+ bindingoffset=0mm
+ }\usepackage{fontenc}
+\usepackage{enumitem}
+\setlist{nolistsep}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{hyperref}
+
+%\setmainfont[Mapping=tex-text]{Linux Libertine O}
+
+
+\begin{document}
+
+\name{Jacob Merle Gershon\\[14pt]}
+\address{ \href{https://jacobgershon.com}{jacobgershon.com} \\}
+\address{ \texttt{nohsr3g@gmail.com}\\ }
+
+\begin{resume}
+\hspace{-8mm}\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+% \noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+  % \makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+
+
+\section{Experience}
+Prescient Design, Genentech \hfill Feb 2026 - Present\\
+{\sl Machine Learning Scientist}\\
+ \vspace{-2mm}
+ \begin{itemize}
+ \item Post-training structure prediction models.
+ \item Building agentic workflows for drug discovery.
+ \end{itemize}
+  \vspace{-2mm}
+
+\section{Education}
+\textit{Ph.D.} - Molecular Engineering \hfill 2025\\
+Institute for Protein Design, University of Washington\\
+Dissertation: \textit{Protein Design at Library Scale}\\[3pt]
+\textit{M.S.} - Biomedical Engineering \hfill 2021\\
+State University of New York at Binghamton\\
+Thesis: \textit{Enhancing Formation of Stem-cell Derived 3D Cardiac Tissue with Extracellular Matrix}\\[3pt]
+\textit{B.S.} - Biomedical Engineering \hfill 2020\\
+State University of New York at Binghamton\\
+Honors: \textit{Summa Cum Laude}
+  \vspace{-2mm}
+
+\section{Research}
+Institute for Protein Design, David Baker \hfill 2021 - 2025\\
+{\sl Graduate Research Assistant}\\
+ \vspace{-2mm}
+ \begin{itemize}
+ \item  Developed a diffusion model in protein sequence space using a structure prediction framework.
+ \item Incorporated experimental data to guide the model, demonstrating the power of an informed prior.
+ \item Built a discrete Bayesian optimization workflow to enhance protein fitness via lab-in-a-loop.
+ \item Designed scalable pipelines for creating custom-filtered libraries for high throughput screens.
+ \item Trained autoencoders with novel variable rate compression strategies for protein-ligand complexes.
+ \end{itemize}
+
+
+
+Regenerative Therapeutics at Binghamton, Tracy Hookway \hfill 2018 - 2021\\
+{\sl Undergraduate Research Assistant}\\
+ \vspace{-2mm}
+ \begin{itemize}
+ \item Engineered 3D cardiac microtissues to enhance biophysical organization.
+ \item Designed a bioreactor for growth of cardiac mesh tissues.
+ \end{itemize}
+   \vspace{-2mm}
+
+
+\section{Publications \& Presentations}
+Computational design of cysteine proteases \hfill 2025\\
+\textit{Choi, H., Coventry, B., et al., Gershon, J., et al.,} \href{https://www.biorxiv.org/content/10.1101/2025.11.21.689808}{biorxiv.org/content/10.1101/2025.11.21.689808}\\[3pt]
+Hierarchical Protein Backbone Generation with Latent and Structure Diffusion \hfill 2025\\
+\textit{Yim, J.*, Jaakik, M.*, Liu, G.*, Gershon J.*, et al.,} \href{https://arxiv.org/abs/2504.09374}{https://arxiv.org/abs/2504.09374}\\[3pt]
+Multistate and functional protein design using RoseTTAFold sequence space diffusion \hfill 2024\\
+\textit{Lisanza, S.*, Gershon, J.*, et al.,} \href {https://www.nature.com/articles/s41587-024-02395-w}{nature.com/articles/s41587-024-02395-w}\\[3pt]
+Towards Guiding Generative Models with Experimental Data \hfill 2024\\
+\textit{ML Protein Engineering Seminar,} \href{https://youtu.be/hbkDL_vxGKE}{youtu.be/hbkDL\_vxGKE}\\[3pt]
+% Exploring Sequence Space Diffusion Models \hfill 2023\\
+% \textit{Rosettacon, Oral Presentation}\\
+% \\
+Enhancing Formation and Alignment of 3D Cardiac Microtissues \hfill 2021\\
+\textit{Masters thesis,} State University of New York at Binghamton\\[3pt]
+Construction of 3D Cardiac Microtissues with Extracellular Matrix Additives \hfill 2018\\
+\textit{ Biomedical Engineering Society Annual Meeting, oral presentation}
+    \vspace{-2mm}
+
+\section{Service, Mentorship \& Teaching}
+GEM Workshop on Generative and Experimental Biomolecular Design \hfill 2024 - Present\\
+\textit{Co-organizer} - Workshops at ICLR and NeurIPS, \href{https://www.gembio.ai}{gembio.ai}\\[3pt]
+Undergraduate Mentorship Program at University of Washington \hfill 2023 - 2025 \\
+\textit{Mentor} - Trained students to process data and train sequence to function prediction models. \\[3pt]
+Introduction to Structural Biology \hfill 2022\\
+\textit{Teaching Assistant} - Led discussion sections and lectured unit on methods development\\
+ \vspace{-4mm}
+
+% Introduction to Biomaterials\\
+% \textit{Teaching Assistant} - Helped with breakout sections during lectures and grading \hfill 2019\\
+% \\
+% Introduction to Biochemistry\\
+% \textit{Teaching Assistant} - Worked with other TAs to organize recitation sections \hfill 2018\\
+\section{Software}
+    Python, PyTorch, Hydra, Biotite, NumPy, GitHub, Matplotlib, Seaborn
+ \vspace{-2mm}
+
+\end{resume}
+\end{document}

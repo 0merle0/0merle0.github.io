@@ -1,0 +1,106 @@
+/* Retro: early-2000s plain HTML look, with a few modern touches */
+body {
+  margin: 0;
+  background: #ffffff;
+  color: #000000;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+a { color: #0000ee; transition: color 0.2s ease; }
+a:visited { color: #551a8b; }
+a:active { color: #ee0000; }
+
+/* Menu bar: wider than the text but inset from the window edges;
+   name on the left, [ links ] on the right */
+.menubar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px 24px;
+  width: min(940px, calc(100% - 2 * clamp(16px, 5vw, 64px)));
+  box-sizing: border-box;
+  margin: 16px auto 0;
+  padding: 10px 20px;
+  background: #e8e8e8;
+  border: 1px solid #808080;
+  font-size: 19px;
+  animation: drop-in 0.5s ease-out both;
+}
+.site-name { font-size: 24px; font-weight: bold; color: #000; text-decoration: none; letter-spacing: 0.01em; }
+.site-name:visited { color: #000; }
+.site-name:hover { color: #0000ee; }
+
+.links::before { content: "[ "; }
+.links::after { content: " ]"; }
+.sep { margin: 0 10px; color: #808080; }
+
+/* Each link lights up in its own color, with an underline that grows in */
+.links a {
+  text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0 2px;
+  transition: color 0.2s ease, background-size 0.25s ease;
+}
+.links a:hover, .links a:focus-visible { background-size: 100% 2px; }
+.links a[href="/"]:hover { color: #00a651; }
+.links a[href="publications.html"]:hover { color: #e4002b; }
+.links a[href="cv.html"]:hover { color: #d4a000; }
+.links a[href="almondz.html"]:hover { color: #9b30ff; }
+.links a[aria-current="page"] { color: #000; font-weight: bold; background-size: 100% 2px; }
+
+/* Page content */
+main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 4px 16px 32px;
+  animation: fade-up 0.6s ease-out 0.1s both;
+}
+
+h1 { font-size: 28px; margin: 20px 0 4px; }
+h2 { font-size: 20px; margin: 20px 0 8px; }
+h3 { font-size: 16px; margin: 14px 0 4px; }
+
+.tagline { font-style: italic; margin-top: 0; }
+.tagline strong { font-style: normal; }
+
+/* Home page intro: photo on the left, greeting beside it, bio below.
+   On phones the photo stacks above the greeting. */
+.intro {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-top: 20px;
+}
+.intro h1 { margin-top: 0; }
+.intro .tagline { margin-bottom: 0; }
+.portrait { width: 200px; height: auto; flex-shrink: 0; border: 1px solid #000; }
+@media (max-width: 560px) {
+  .intro { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .portrait { width: 160px; }
+}
+
+.pubs li { margin-bottom: 10px; }
+.pub-title, .pub-authors, .pub-venue { display: block; }
+.pub-title { font-weight: bold; }
+.pub-links a::before { content: "["; color: #000; }
+.pub-links a::after { content: "]"; color: #000; }
+
+/* Contact links: one row, wrapping on narrow screens */
+.contact-links { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 28px; }
+
+.gallery { display: flex; flex-wrap: wrap; gap: 12px; }
+.gallery figure { margin: 0; width: 220px; }
+.gallery img { width: 220px; height: 220px; object-fit: cover; border: 1px solid #000; transition: transform 0.2s ease; }
+.gallery img:hover { transform: scale(1.03); }
+.gallery figcaption { font-size: 14px; }
+
+.site-footer { border-top: 1px solid #808080; margin-top: 24px; padding-top: 8px; font-size: 13px; color: #555; }
+
+@keyframes drop-in { from { opacity: 0; transform: translateY(-8px); } }
+@keyframes fade-up { from { opacity: 0; transform: translateY(6px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
