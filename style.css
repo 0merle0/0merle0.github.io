@@ -99,6 +99,10 @@ a.rainbow, a.rainbow:visited {
   transition: none;
   animation: rainbow-slide 3s linear infinite;
 }
+/* High-contrast mode drops the background, so give the text a real color */
+@media (forced-colors: active) {
+  a, a.rainbow, a.glow, a:hover { color: LinkText; }
+}
 .site-name::after, .links a::after, .name-link::after {
   content: "";
   position: absolute;
