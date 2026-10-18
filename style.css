@@ -155,7 +155,7 @@ main li { margin-bottom: 6px; }
 /* Contact links: one row, wrapping on narrow screens */
 .contact-links { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 28px; }
 
-/* almondz: the bag on the left, name and price beside it */
+/* almondz: the bag on the left, its name and description beside it */
 .product { display: flex; gap: 28px; align-items: flex-start; margin-top: 16px; }
 .product-photos {
   flex: 0 0 300px;
@@ -167,7 +167,6 @@ main li { margin-bottom: 6px; }
 .product-photos img:first-child { grid-column: span 2; }
 .product-photos p { grid-column: span 2; margin: 0; padding: 60px 12px; text-align: center; border: 1px dashed #808080; color: #555; }
 .product-info h2 { font-size: 24px; margin-top: 0; }
-.price { font-size: 22px; font-weight: bold; margin: 0 0 8px; }
 @media (max-width: 560px) {
   .product { flex-direction: column; gap: 12px; }
   .product-photos { flex-basis: auto; width: 100%; }

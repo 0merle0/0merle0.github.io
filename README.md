@@ -4,7 +4,7 @@ Plain HTML/CSS personal site served by GitHub Pages. No build step.
 
 - `index.html` — home page: bio, experience (with the CV PDF link) and contact
 - `publications.html` — publications and talks
-- `almondz.html` — the Centurion Bag (order by email); photos go in `images/almondz/`
+- `almondz.html` — the bag, $500 (order by email); photos go in `images/almondz/`
 - `style.css` — shared styles
 - `cv/` — LaTeX source for the resume; build with `cd cv && pdflatex main.tex`, then copy `main.pdf` to `files/cv.pdf`
 - `files/` — downloadable files (`cv.pdf`)
