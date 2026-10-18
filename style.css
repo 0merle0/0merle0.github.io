@@ -8,18 +8,26 @@ body {
   line-height: 1.4;
 }
 
-a { color: #0000ee; transition: color 0.2s ease; }
-a:visited { color: #551a8b; }
-a:active { color: #ee0000; }
-
-/* Hovered links fill with a rainbow that slides through the text */
+/* Hovered links reveal a sliding rainbow clipped to the text: the link color
+   fades to transparent, and fades back when the mouse leaves. The rainbow is
+   only drawn (background-size) while hovered or fading out, so it never
+   fringes the edges of resting text. */
 :root { --rainbow: linear-gradient(90deg, #ff0040, #ff8a00, #ffe600, #00e05a, #00b3ff, #8a2be2, #ff00c8, #ff0040); }
-a:not([aria-current]):hover {
-  color: transparent;
+a {
+  color: #0000ee;
   background-image: var(--rainbow);
-  background-size: 200% 100%;
+  background-size: 0 0;
   -webkit-background-clip: text;
   background-clip: text;
+  animation: rainbow-slide 1.5s linear infinite;
+  transition: color 1.8s ease, background-size 0s linear 1.8s;
+}
+a:visited { color: #551a8b; }
+a:active { color: #ee0000; }
+a:not([aria-current]):hover {
+  color: transparent;
+  background-size: 200% 100%;
+  transition: color 1.8s ease, background-size 0s;
   animation: rainbow-slide 1.5s linear infinite, rainbow-line 1.5s linear infinite;
 }
 @keyframes rainbow-slide { to { background-position: -200% 0; } }
@@ -65,9 +73,10 @@ h1, h2 { scroll-margin-top: 90px; }
 .links::after { content: " ]"; }
 .sep { margin: 0 10px; color: #808080; }
 
-/* Menu links and the name: a rainbow underline grows out from the middle */
-.site-name, .links a { position: relative; text-decoration: none; }
-.site-name::after, .links a::after {
+/* Menu links, the name and "Jacob" on the home page: a rainbow underline grows out from the middle */
+.site-name, .links a, .name-link { position: relative; text-decoration: none; }
+.name-link, .name-link:visited { color: inherit; }
+.site-name::after, .links a::after, .name-link::after {
   content: "";
   position: absolute;
   left: 0;
@@ -84,6 +93,7 @@ h1, h2 { scroll-margin-top: 90px; }
    to grow and it moves at the same speed */
 .site-name::after { transition-duration: 0.9s; }
 .site-name:hover::after, .site-name:focus-visible::after,
+.name-link:hover::after, .name-link:focus-visible::after,
 .links a:hover::after, .links a:focus-visible::after { transform: scaleX(1); }
 .links a[aria-current="page"] { color: #000; font-weight: bold; }
 .links a[aria-current="page"]::after { background: #000; transform: scaleX(1); }
