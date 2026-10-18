@@ -87,7 +87,7 @@ h1, h2 { scroll-margin-top: 90px; }
 
 .links::before { content: "[ "; }
 .links::after { content: " ]"; }
-.sep { margin: 0 10px; color: #808080; }
+.sep { margin: 0 10px; color: #000; }
 
 /* Menu links, the name and "Jacob" on the home page: a rainbow underline grows out from the middle */
 .site-name, .links a, .name-link { position: relative; text-decoration: none; }
@@ -175,7 +175,7 @@ main li { margin-bottom: 6px; }
 .entries li { margin-bottom: 12px; }
 .entry-title, .entry-meta, .entry-desc { display: block; }
 .entry-title { font-weight: bold; }
-.entry-meta { color: #555; font-size: 15px; }
+.entry-meta { color: #000; font-size: 15px; }
 .pub-title, .pub-authors, .pub-venue { display: block; }
 .pub-title { font-weight: bold; }
 .pub-links a::before { content: "["; color: #000; }
@@ -194,7 +194,7 @@ main li { margin-bottom: 6px; }
 }
 .product-photos img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; border: 1px solid #000; }
 .product-photos img:first-child { grid-column: span 2; }
-.product-photos p { grid-column: span 2; margin: 0; padding: 60px 12px; text-align: center; border: 1px dashed #808080; color: #555; }
+.product-photos p { grid-column: span 2; margin: 0; padding: 60px 12px; text-align: center; border: 1px dashed #808080; color: #000; }
 .product-info h2 { font-size: 24px; margin-top: 0; }
 @media (max-width: 560px) {
   .product { flex-direction: column; gap: 12px; }
@@ -213,11 +213,11 @@ main li { margin-bottom: 6px; }
   h1, h2 { scroll-margin-top: 80px; }
   .contact-links { display: grid; grid-template-columns: repeat(2, max-content); gap: 10px 32px; }
   .contact-links a { display: inline-block; padding: 4px 0; }
-  .pub-authors { font-size: 14px; color: #444; }
+  .pub-authors { font-size: 14px; color: #000; }
   .pub-links a { display: inline-block; padding: 4px 0; }
 }
 
-.site-footer { margin-top: 24px; font-size: 13px; color: #555; }
+.site-footer { margin-top: 24px; font-size: 13px; color: #000; }
 /* The footer's top line is a strip of random black dither that fades in
    downward, sparse at the top and dense just above the footer text; four
    noise frames flip quickly so it sizzles. Each frame is a tiny 1-bit image
