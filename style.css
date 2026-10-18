@@ -61,8 +61,11 @@ a:not([aria-current]):hover {
   position: sticky;
   top: 8px;
   z-index: 10;
-  /* White strip filling the gap above the bar, so scrolled text never shows there */
-  box-shadow: 0 -9px 0 #fff;
+  /* White everywhere above the bar's bottom edge (the gap above it and both
+     sides), so scrolled text never shows around it: a huge white shadow,
+     clipped off at the bar's bottom edge */
+  box-shadow: 0 0 0 100vmax #fff;
+  clip-path: inset(-100vmax -100vmax 0 -100vmax);
 }
 /* Keep jumped-to headings from hiding under the pinned bar */
 h1, h2 { scroll-margin-top: 90px; }
