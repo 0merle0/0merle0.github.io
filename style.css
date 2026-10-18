@@ -77,9 +77,8 @@ a.glow:not([aria-current]) {
   z-index: 10;
   /* White everywhere above the bar's bottom edge (the gap above it and both
      sides), so scrolled text never shows around it: a huge white shadow,
-     clipped off at the bar's bottom edge */
-  box-shadow: 0 0 0 100vmax #fff;
-  clip-path: inset(-100vmax -100vmax 0 -100vmax);
+     shifted up so its bottom edge lines up exactly with the bar's */
+  box-shadow: 0 -100vmax 0 100vmax #fff;
 }
 /* Keep jumped-to headings from hiding under the pinned bar */
 h1, h2 { scroll-margin-top: 90px; }
@@ -201,7 +200,8 @@ main li { margin-bottom: 6px; }
 /* Phones: a compact bar (name on top, links in one evenly spaced row
    underneath), quieter author lists and bigger tap targets */
 @media (max-width: 560px) {
-  .menubar { flex-direction: column; align-items: stretch; gap: 0; padding: 6px 12px 4px; font-size: 16px; top: 6px; margin-top: 10px; }
+  /* 8px from the screen edges, so it's a little wider than the text (16px in) */
+  .menubar { flex-direction: column; align-items: stretch; gap: 0; padding: 6px 12px 4px; font-size: 16px; top: 6px; margin-top: 10px; width: calc(100% - 16px); }
   .site-name { font-size: 20px; }
   .links { display: flex; justify-content: space-between; align-items: center; }
   .links a { padding: 5px 0; }
@@ -213,7 +213,26 @@ main li { margin-bottom: 6px; }
   .pub-links a { display: inline-block; padding: 4px 0; }
 }
 
-.site-footer { border-top: 1px solid #808080; margin-top: 24px; padding-top: 8px; font-size: 13px; color: #555; }
+.site-footer { margin-top: 24px; font-size: 13px; color: #555; }
+/* The footer's top line is a strip of random black dither that fades in
+   downward, sparse at the top and dense just above the footer text; four
+   noise frames flip quickly so it sizzles. Each frame is a tiny 1-bit image
+   wide enough not to visibly repeat, shown at 2x with crisp pixels. */
+.site-footer::before {
+  content: "";
+  display: block;
+  height: 16px;
+  margin-bottom: 6px;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAAICAMAAADgI1lkAAAABlBMVEUAAAAAAAClZ7nPAAAAAnRSTlMA/1uRIrUAAAGrSURBVHjarZULbsNACER59790lcTAwLLrWOlKbWobw/xIzd4HW85w68Hh9IRdGf804Hyb32nxay8eFvLLDJ6BYVJs6gG3Or9LOGB5FVCe8hQp63tsW1UqfKfeSDS4fYq4fq2e8U2UtlALR7lBEQzuiSGWcbd7e/mMeYVhTQwF0uDSoAUn7VisL1gYsnH9cCFswom/LP0ar2QUMkBLiZamVesqkfZSwHSM0+bgw0t4gEGYNKtVOy5a2wC+i3eTGvFXoFO6+rQMrw6B5bsAaIwl56StMvIzxTfhumoKiJlUV9GdUBJqcfG4ZozFevlDpXYapAIE3oTiNSl4rRcZKR7Ja0izGgQKc0m1ZbBcLdfVV0iwt91yNESZO6+3xUl3r3w0beLa2UBeOmWpis2UQAQfSLm9KoUT2uRoYZM5oe2CeoCYKaDz0yNakkosdCZOTupe8IjiJkLIcmDSPRTQV/X/tAIJBzMgCqKAi7G+oFIiXWvjtC+1b/RSK3pbibt2tk4gHO6I1mMr+F4wXBmZlGM9DfBYNjy9R2PDE9vz5DjvXqXtPesIWkIUkySSP8nOBK6f4fIAAAAAAElFTkSuQmCC") 0 0 / 800px 16px repeat-x;
+  image-rendering: pixelated;
+  animation: dither-sizzle 0.4s steps(1) infinite;
+}
+@keyframes dither-sizzle {
+  0% { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAAICAMAAADgI1lkAAAABlBMVEUAAAAAAAClZ7nPAAAAAnRSTlMA/1uRIrUAAAGrSURBVHjarZULbsNACER59790lcTAwLLrWOlKbWobw/xIzd4HW85w68Hh9IRdGf804Hyb32nxay8eFvLLDJ6BYVJs6gG3Or9LOGB5FVCe8hQp63tsW1UqfKfeSDS4fYq4fq2e8U2UtlALR7lBEQzuiSGWcbd7e/mMeYVhTQwF0uDSoAUn7VisL1gYsnH9cCFswom/LP0ar2QUMkBLiZamVesqkfZSwHSM0+bgw0t4gEGYNKtVOy5a2wC+i3eTGvFXoFO6+rQMrw6B5bsAaIwl56StMvIzxTfhumoKiJlUV9GdUBJqcfG4ZozFevlDpXYapAIE3oTiNSl4rRcZKR7Ja0izGgQKc0m1ZbBcLdfVV0iwt91yNESZO6+3xUl3r3w0beLa2UBeOmWpis2UQAQfSLm9KoUT2uRoYZM5oe2CeoCYKaDz0yNakkosdCZOTupe8IjiJkLIcmDSPRTQV/X/tAIJBzMgCqKAi7G+oFIiXWvjtC+1b/RSK3pbibt2tk4gHO6I1mMr+F4wXBmZlGM9DfBYNjy9R2PDE9vz5DjvXqXtPesIWkIUkySSP8nOBK6f4fIAAAAAAElFTkSuQmCC"); }
+  25% { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAAICAMAAADgI1lkAAAABlBMVEUAAAAAAAClZ7nPAAAAAnRSTlMA/1uRIrUAAAGySURBVHjanZWBjsMwCEN5///Tp1MTsEnSro2mpWuDwcZ0QRwXtr1Y7yN+ROFVEM+H+FATX6nwSTaJhbvjyC10f+4jA/mQgM+tQTBWETj+eKEQJ8XwxNbAWyA2hFfLNMV6EAdL0s5ya02MyGE+MZdwpyQbnQWfTAizAE6adAR8QmghNEfxNIM4OrvZzkpZgZGPO7E1BKmdsKg4tF3zr053V+BE0gHcmIUxkqXm/w2expGyAyxysTcBncwIRg27wJgtqroZSTEcTK4nLpMe9/GUnqM+IyMqL7k3k4GOwzzWR7Dbi1DpaxDsXsZ49gtfPv7mQxSZclA0Ee5uNXI0acoZOJaLdPeohdRQCi0NzXxsuxoVNqlX7QXPfF7tROzP1ILF4bUGpPZ8NidLls6U6NLrQX581030ZUn2g9i3URqpHE2MkBwqI5TzRBhS+CxyXlVbcnYiKQgbmvctSehWHuvyVeqmf0imUESngPxZkDIKarSCOk2JUt3LwciLQ2iEqFijhODUgwzBWxd2vLlPL1yA2B+OE4b4Yivk3WrI8VzLghzbg9vGSIKW9SDOber4jdC1/gCGtgTSMqNgeQAAAABJRU5ErkJggg=="); }
+  50% { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAAICAMAAADgI1lkAAAABlBMVEUAAAAAAAClZ7nPAAAAAnRSTlMA/1uRIrUAAAG7SURBVHjanZQLbsQgDET97n/pSg2MxxiSbNJqFQVszw8i/h8ilpc3D2+K+LntpoBPVfGpSa975Eld+jroCS7zl9sZnD+SDXzrnUfvmG0DxH0h20979PAO4E3jl2rxg6xLMqCFHuHn1Az35iigrdNS4PnjUL0LMRdEOMy/UYA1OJwcfE4Buy9QgTP+LsAcfUMbUG5YM08LLTljbKFpCet297xWpD+scu9uD5Ixx2u2SUVN3dJiurtCbhcW5Z96TyBRsDI5QIdCgcrlxvg8Xq2nC+AKZxPAMPWjNHsaJijMmVnAD6o6zWlU2zjEhBTYULM5yBei2ZnFYA6ngKybZOoZEpMqYYgg+GhcI5MlpJtZJuekmatu/rkrKfmYaTaMAapQB2vDnDZ9zE0Yv9D+wlQiYTLPTZO+YpZktZ30yq8PzVEO8yJxj3ITxUFlkkyn+u6eyKUkTp4cNUKqSjdbdWYYujQkLA2ueLYIIXImSyCqHXmFSdSOKCwRhtKcj8w+JTtBDZGOnn9y04xC5AXgq1G9WCtscPWsqFMW42CoEe1mtyEuf5zScgC1gImHoO37xpZOJdKRRHvZRntX/Ael/QSgwg4z6gAAAABJRU5ErkJggg=="); }
+  75% { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAAICAMAAADgI1lkAAAABlBMVEUAAAAAAAClZ7nPAAAAAnRSTlMA/1uRIrUAAAG5SURBVHjanZRZksQwCEN597/0VNfESBDiLPnpdmKEkGRHfHgoP9ttxPVebkHYfiA+Prf8eUaFx/W84MyznYOy+GC/BcxUZnCqZXXxTeK3kZjHuijAhqGsLhzYJwFOyLtB2InKOANF5VrDo0By2asXI0k48e4wFHBu4sIg08QZpiFoPFonjNTRG4bGlnZ7Db1FjQvCT1z6mPhcawqOP78jBQSMsW6kxOEA5ZSBqtIJdpaZ4hfF3SFZmC7/AwzdCsa6PGC+IlJqyBJqvLAzmXuXckvjVYR5h3dZu8DME65NTHEckT2K3VObUyyznpLVvEex0AqPTEcOTNWoxBWP6sqS1m6DQBcW/Yg2UcrI+bpoaTnW9Mhs0joKoFQomdMcOj1qgVlov0ohrvxRhx23lZh8MkVGMyOzFDMXEQ87xAtlYaHWmU4NZSYkaaiikFZgofYwYGwWTRWAQ9hJoT/SJHK3naH8jxuA7q2VrSgeY3GMpo04h2hqhHxnazuvdmFi6UAZNwl1L+u8m3tROwnT3M+Lq5EJ+8BZ1t1rn9kpvMPoH+Ni/zOA2FXEA2KxxyzOWC6rqnEvQcyvWuUfgs0ExSmFIZIAAAAASUVORK5CYII="); }
+}
 
 @keyframes drop-in { from { opacity: 0; transform: translateY(-8px); } }
 @keyframes fade-up { from { opacity: 0; transform: translateY(6px); } }
