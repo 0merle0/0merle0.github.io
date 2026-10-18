@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>almondz - Jacob Gershon</title>
-  <meta name="description" content="Sewing and other art projects by Jacob Gershon.">
+  <meta name="description" content="The Centurion Bag by almondz: handmade to order, $100.">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,7 +13,6 @@
     <span class="links">
       <a href="/">home</a><span class="sep" aria-hidden="true">|</span>
       <a href="publications.html">publications</a><span class="sep" aria-hidden="true">|</span>
-      <a href="cv.html">cv</a><span class="sep" aria-hidden="true">|</span>
       <a href="almondz.html" aria-current="page">almondz</a>
     </span>
   </div>
@@ -21,11 +20,33 @@
   <main>
   <h1>almondz</h1>
   <p class="tagline">Sewing and other art projects.</p>
-  <p>More on Instagram: <a href="https://www.instagram.com/__almondz__/">@__almondz__</a></p>
 
-  <!-- GALLERY START: filled in by scripts/sync_instagram.py -->
-  <p>Under construction. Check back soon!</p>
-  <!-- GALLERY END -->
+  <div class="product">
+    <div class="product-photos">
+      <p>Photos coming soon.</p>
+    </div>
+    <div class="product-info">
+      <h2>Centurion Bag</h2>
+      <p class="price">$100</p>
+      <p>Handmade to order. Fill out the form and I'll email you to talk through
+      how yours gets made.</p>
+    </div>
+  </div>
+
+  <h2 id="order">order one</h2>
+  <form class="order-form" action="https://formsubmit.co/almondzmail@gmail.com" method="POST">
+    <input type="hidden" name="_subject" value="New Centurion Bag order request">
+    <input type="hidden" name="_next" value="https://jacobgershon.com/thanks.html">
+    <input type="hidden" name="_template" value="table">
+    <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <label>Name <input type="text" name="name" required autocomplete="name"></label>
+    <label>Email <input type="email" name="email" required autocomplete="email"></label>
+    <label>Anything you have in mind (colors, fabric, size, timing)
+      <textarea name="details" rows="5"></textarea></label>
+    <button type="submit">send request</button>
+  </form>
+
+  <p>More on Instagram: <a href="https://www.instagram.com/__almondz__/">@__almondz__</a></p>
 
     <p class="site-footer">&copy; 2026 Jacob Gershon</p>
   </main>
