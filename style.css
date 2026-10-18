@@ -10,8 +10,28 @@ body {
 
 a { color: #0000ee; transition: color 0.2s ease; }
 a:visited { color: #551a8b; }
-a:hover { color: #00e05a; }
 a:active { color: #ee0000; }
+
+/* Hovered links fill with a rainbow that slides through the text */
+:root { --rainbow: linear-gradient(90deg, #ff0040, #ff8a00, #ffe600, #00e05a, #00b3ff, #8a2be2, #ff00c8, #ff0040); }
+a:not([aria-current]):hover {
+  color: transparent;
+  background-image: var(--rainbow);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: rainbow-slide 1.5s linear infinite, rainbow-line 1.5s linear infinite;
+}
+@keyframes rainbow-slide { to { background-position: -200% 0; } }
+/* Underlines on ordinary links cycle through the same colors */
+@keyframes rainbow-line {
+  0%, 100% { text-decoration-color: #ff0040; }
+  17% { text-decoration-color: #ff8a00; }
+  33% { text-decoration-color: #ffe600; }
+  50% { text-decoration-color: #00e05a; }
+  67% { text-decoration-color: #00b3ff; }
+  83% { text-decoration-color: #8a2be2; }
+}
 
 /* Menu bar: wider than the text but inset from the window edges;
    name on the left, [ links ] on the right */
@@ -40,24 +60,33 @@ a:active { color: #ee0000; }
 h1, h2 { scroll-margin-top: 90px; }
 .site-name { font-size: 24px; font-weight: bold; color: #000; text-decoration: none; letter-spacing: 0.01em; }
 .site-name:visited { color: #000; }
-.site-name:hover { color: #00e05a; }
 
 .links::before { content: "[ "; }
 .links::after { content: " ]"; }
 .sep { margin: 0 10px; color: #808080; }
 
-/* Links (and the name) turn electric green, with an underline that grows out from the middle */
-.site-name, .links a {
-  text-decoration: none;
-  background: linear-gradient(currentColor, currentColor) no-repeat 50% 100% / 0 2px;
-  transition: color 0.2s ease, background-size 0.5s ease;
+/* Menu links and the name: a rainbow underline grows out from the middle */
+.site-name, .links a { position: relative; text-decoration: none; }
+.site-name::after, .links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--rainbow);
+  background-size: 200% 100%;
+  transform: scaleX(0);
+  transition: transform 0.5s ease;
+  animation: rainbow-slide 1.5s linear infinite;
 }
 /* The name is about twice as wide as a menu link, so give its underline longer
    to grow and it moves at the same speed */
-.site-name { transition: color 0.2s ease, background-size 0.9s ease; }
-.site-name:hover, .site-name:focus-visible,
-.links a:hover, .links a:focus-visible { background-size: 100% 2px; }
-.links a[aria-current="page"] { color: #000; font-weight: bold; background-size: 100% 2px; }
+.site-name::after { transition-duration: 0.9s; }
+.site-name:hover::after, .site-name:focus-visible::after,
+.links a:hover::after, .links a:focus-visible::after { transform: scaleX(1); }
+.links a[aria-current="page"] { color: #000; font-weight: bold; }
+.links a[aria-current="page"]::after { background: #000; transform: scaleX(1); }
 
 /* Page content */
 main {
