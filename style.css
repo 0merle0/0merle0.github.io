@@ -6,6 +6,8 @@ body {
   font-family: "Times New Roman", Times, serif;
   font-size: 16px;
   line-height: 1.4;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 /* Hovered links reveal a sliding rainbow clipped to the text: the link color
@@ -24,10 +26,22 @@ a {
 }
 a:visited { color: #551a8b; }
 a:active { color: #ee0000; }
-a:not([aria-current]):hover {
+/* Only on devices with a real pointer: on phones a tap counts as a hover and
+   would leave the effect stuck on the link */
+@media (hover: hover) {
+  a:not([aria-current]):hover {
+    color: transparent;
+    background-size: 200% 100%;
+    transition: color 1.8s ease, background-size 0s;
+    animation: rainbow-slide 1.5s linear infinite, rainbow-line 1.5s linear infinite;
+  }
+}
+/* Touch screens: effects.js adds .glow to links near a tap. Fades in quickly,
+   then back out at the normal speed when the class is removed. */
+a.glow:not([aria-current]) {
   color: transparent;
   background-size: 200% 100%;
-  transition: color 1.8s ease, background-size 0s;
+  transition: color 0.4s ease, background-size 0s;
   animation: rainbow-slide 1.5s linear infinite, rainbow-line 1.5s linear infinite;
 }
 @keyframes rainbow-slide { to { background-position: -200% 0; } }
@@ -79,6 +93,13 @@ h1, h2 { scroll-margin-top: 90px; }
 /* Menu links, the name and "Jacob" on the home page: a rainbow underline grows out from the middle */
 .site-name, .links a, .name-link { position: relative; text-decoration: none; }
 .name-link, .name-link:visited { color: inherit; }
+/* "sustainable" in the tagline: rainbow all the time, not just on hover */
+a.rainbow, a.rainbow:visited {
+  color: transparent;
+  background-size: 200% 100%;
+  transition: none;
+  animation: rainbow-slide 3s linear infinite;
+}
 .site-name::after, .links a::after, .name-link::after {
   content: "";
   position: absolute;
@@ -95,9 +116,12 @@ h1, h2 { scroll-margin-top: 90px; }
 /* The name is about twice as wide as a menu link, so give its underline longer
    to grow and it moves at the same speed */
 .site-name::after { transition-duration: 0.9s; }
-.site-name:hover::after, .site-name:focus-visible::after,
-.name-link:hover::after, .name-link:focus-visible::after,
-.links a:hover::after, .links a:focus-visible::after { transform: scaleX(1); }
+.site-name:focus-visible::after, .name-link:focus-visible::after,
+.links a:focus-visible::after,
+.site-name.glow::after, .name-link.glow::after, .links a.glow::after { transform: scaleX(1); }
+@media (hover: hover) {
+  .site-name:hover::after, .name-link:hover::after, .links a:hover::after { transform: scaleX(1); }
+}
 .links a[aria-current="page"] { color: #000; font-weight: bold; }
 .links a[aria-current="page"]::after { background: #000; transform: scaleX(1); }
 
@@ -117,7 +141,7 @@ h3 { font-size: 16px; margin: 14px 0 4px; }
 .tagline strong { font-style: normal; }
 
 /* Home page intro: photo on the left, greeting beside it, bio below.
-   On phones the photo stacks above the greeting. */
+   On phones the photo shrinks but stays beside the greeting. */
 .intro {
   display: flex;
   align-items: center;
@@ -128,8 +152,10 @@ h3 { font-size: 16px; margin: 14px 0 4px; }
 .intro .tagline { margin-bottom: 0; }
 .portrait { width: 200px; height: auto; flex-shrink: 0; border: 1px solid #000; }
 @media (max-width: 560px) {
-  .intro { flex-direction: column; align-items: flex-start; gap: 12px; }
-  .portrait { width: 160px; }
+  .intro { gap: 16px; margin-top: 16px; }
+  .intro h1 { font-size: 25px; }
+  .intro .tagline { font-size: 15px; }
+  .portrait { width: 112px; }
 }
 
 /* No bullets anywhere: lists are plain stacked lines */
@@ -172,14 +198,19 @@ main li { margin-bottom: 6px; }
   .product-photos { flex-basis: auto; width: 100%; }
 }
 
-/* Phones: name on top, links in one evenly spaced row underneath */
+/* Phones: a compact bar (name on top, links in one evenly spaced row
+   underneath), quieter author lists and bigger tap targets */
 @media (max-width: 560px) {
-  .menubar { flex-direction: column; align-items: stretch; gap: 4px; padding: 10px 12px; font-size: 17px; }
-  .site-name { font-size: 22px; }
+  .menubar { flex-direction: column; align-items: stretch; gap: 0; padding: 6px 12px 4px; font-size: 16px; top: 6px; margin-top: 10px; }
+  .site-name { font-size: 20px; }
   .links { display: flex; justify-content: space-between; align-items: center; }
-  .links a { padding: 6px 0; }
+  .links a { padding: 5px 0; }
   .sep { margin: 0; }
+  h1, h2 { scroll-margin-top: 80px; }
   .contact-links { display: grid; grid-template-columns: repeat(2, max-content); gap: 10px 32px; }
+  .contact-links a { display: inline-block; padding: 4px 0; }
+  .pub-authors { font-size: 14px; color: #444; }
+  .pub-links a { display: inline-block; padding: 4px 0; }
 }
 
 .site-footer { border-top: 1px solid #808080; margin-top: 24px; padding-top: 8px; font-size: 13px; color: #555; }
