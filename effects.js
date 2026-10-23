@@ -19,17 +19,26 @@
     }
   }, { passive: true });
 
-  // The © in the footer secretly switches between light and dark, and the
-  // choice is remembered (the <head> script applies it on the next page)
-  const toggle = document.querySelector(".theme-toggle");
-  if (toggle) toggle.addEventListener("click", () => {
-    const root = document.documentElement;
-    const dark = root.dataset.theme
-      ? root.dataset.theme === "dark"
-      : matchMedia("(prefers-color-scheme: dark)").matches;
-    root.classList.add("theme-switching");
-    root.dataset.theme = dark ? "light" : "dark";
-    requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("theme-switching")));
-    try { localStorage.setItem("theme", root.dataset.theme); } catch (e) {}
-  });
+  // Light/dark: the © in the footer (hidden) and the switch at the very bottom
+  // both flip it, and the choice is remembered (the <head> script applies it
+  // on the next page). The switch's label names the mode it switches to.
+  const root = document.documentElement;
+  const isDark = () => root.dataset.theme
+    ? root.dataset.theme === "dark"
+    : matchMedia("(prefers-color-scheme: dark)").matches;
+  const label = () => {
+    for (const s of document.querySelectorAll(".theme-switch"))
+      s.textContent = isDark() ? "\u2600 light mode" : "\u263E dark mode";
+  };
+  for (const b of document.querySelectorAll(".theme-toggle, .theme-switch")) {
+    b.addEventListener("click", () => {
+      root.classList.add("theme-switching");
+      root.dataset.theme = isDark() ? "light" : "dark";
+      requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("theme-switching")));
+      try { localStorage.setItem("theme", root.dataset.theme); } catch (e) {}
+      label();
+    });
+  }
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", label);
+  label();
 })();

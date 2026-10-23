@@ -1,7 +1,7 @@
 /* Retro: early-2000s plain HTML look, with a few modern touches */
 
 /* Colors. Dark mode follows the device setting; the hidden button in the
-   footer (the ©) overrides it by setting data-theme on <html>. */
+   footer (the ©) and the switch below it override it by setting data-theme on <html>. */
 :root {
   color-scheme: light;
   --bg: #ffffff;
@@ -262,6 +262,10 @@ main li { margin-bottom: 6px; }
 .theme-switching, .theme-switching * { transition: none !important; }
 .theme-toggle { all: unset; cursor: pointer; }
 .theme-toggle:focus-visible { outline: 1px dotted var(--fg); }
+/* The visible switch, on its own line at the very bottom */
+.theme-row { margin: 4px 0 0; font-size: 13px; }
+.theme-switch { font: inherit; color: var(--fg); background: var(--bar); border: 1px solid var(--rule); padding: 1px 8px; cursor: pointer; }
+.theme-switch:focus-visible { outline: 1px dotted var(--fg); outline-offset: 2px; }
 /* The footer's top line is a strip of random black dither that fades in
    downward, sparse at the top and dense just above the footer text; four
    noise frames flip quickly so it sizzles. Each frame is a tiny 1-bit image
