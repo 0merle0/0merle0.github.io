@@ -256,14 +256,14 @@ main li { margin-bottom: 6px; }
   .pub-links a { display: inline-block; padding: 4px 0; }
 }
 
-.site-footer { margin-top: 24px; font-size: 13px; color: var(--fg); }
+.site-footer { margin-top: 24px; font-size: 13px; color: var(--fg); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 12px; }
+.site-footer::before { flex: 0 0 100%; } /* the dither line spans the top */
 /* The © is secretly a button that flips light/dark; the switch is instant,
    so slow link fades don't lag behind the page */
 .theme-switching, .theme-switching * { transition: none !important; }
 .theme-toggle { all: unset; cursor: pointer; }
 .theme-toggle:focus-visible { outline: 1px dotted var(--fg); }
-/* The visible switch, on its own line at the very bottom */
-.theme-row { margin: 4px 0 0; font-size: 13px; }
+/* The visible switch, on the right across from the copyright */
 .theme-switch { font: inherit; color: var(--fg); background: var(--bar); border: 1px solid var(--rule); padding: 1px 8px; cursor: pointer; }
 .theme-switch:focus-visible { outline: 1px dotted var(--fg); outline-offset: 2px; }
 /* The footer's top line is a strip of random black dither that fades in
