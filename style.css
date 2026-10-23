@@ -1,8 +1,47 @@
 /* Retro: early-2000s plain HTML look, with a few modern touches */
+
+/* Colors. Dark mode follows the device setting; the hidden button in the
+   footer (the ©) overrides it by setting data-theme on <html>. */
+:root {
+  color-scheme: light;
+  --bg: #ffffff;
+  --fg: #000000;
+  --bar: #e8e8e8;
+  --rule: #808080;
+  --link: #0000ee;
+  --visited: #551a8b;
+  --active: #ee0000;
+  --dither: none;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #111111;
+    --fg: #e8e8e8;
+    --bar: #2a2a2a;
+    --rule: #6a6a6a;
+    --link: #8ab4ff;
+    --visited: #c58af9;
+    --active: #ff6b6b;
+    --dither: invert(1);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #111111;
+  --fg: #e8e8e8;
+  --bar: #2a2a2a;
+  --rule: #6a6a6a;
+  --link: #8ab4ff;
+  --visited: #c58af9;
+  --active: #ff6b6b;
+  --dither: invert(1);
+}
+
 body {
   margin: 0;
-  background: #ffffff;
-  color: #000000;
+  background: var(--bg);
+  color: var(--fg);
   font-family: "Times New Roman", Times, serif;
   font-size: 16px;
   line-height: 1.4;
@@ -16,7 +55,7 @@ body {
    fringes the edges of resting text. */
 :root { --rainbow: linear-gradient(90deg, #ff0040, #ff8a00, #ffe600, #00e05a, #00b3ff, #8a2be2, #ff00c8, #ff0040); }
 a {
-  color: #0000ee;
+  color: var(--link);
   background-image: var(--rainbow);
   background-size: 0 0;
   -webkit-background-clip: text;
@@ -24,8 +63,8 @@ a {
   animation: rainbow-slide 1.5s linear infinite;
   transition: color 1.8s ease, background-size 0s linear 1.8s;
 }
-a:visited { color: #551a8b; }
-a:active { color: #ee0000; }
+a:visited { color: var(--visited); }
+a:active { color: var(--active); }
 /* Only on devices with a real pointer: on phones a tap counts as a hover and
    would leave the effect stuck on the link */
 @media (hover: hover) {
@@ -67,27 +106,27 @@ a.glow:not([aria-current]) {
   box-sizing: border-box;
   margin: 16px auto 0;
   padding: 10px 20px;
-  background: #e8e8e8;
-  border: 1px solid #808080;
+  background: var(--bar);
+  border: 1px solid var(--rule);
   font-size: 19px;
   animation: drop-in 0.5s ease-out both;
   /* Stays pinned near the top of the window while scrolling */
   position: sticky;
   top: 8px;
   z-index: 10;
-  /* White everywhere above the bar's bottom edge (the gap above it and both
+  /* Page color everywhere above the bar's bottom edge (the gap above it and both
      sides), so scrolled text never shows around it: a huge white shadow,
      shifted up so its bottom edge lines up exactly with the bar's */
-  box-shadow: 0 -100vmax 0 100vmax #fff;
+  box-shadow: 0 -100vmax 0 100vmax var(--bg);
 }
 /* Keep jumped-to headings from hiding under the pinned bar */
 h1, h2 { scroll-margin-top: 90px; }
-.site-name { font-size: 24px; font-weight: bold; color: #000; text-decoration: none; letter-spacing: 0.01em; }
-.site-name:visited { color: #000; }
+.site-name { font-size: 24px; font-weight: bold; color: var(--fg); text-decoration: none; letter-spacing: 0.01em; }
+.site-name:visited { color: var(--fg); }
 
 .links::before { content: "[ "; }
 .links::after { content: " ]"; }
-.sep { margin: 0 10px; color: #000; }
+.sep { margin: 0 10px; color: var(--fg); }
 
 /* Menu links, the name and "Jacob" on the home page: a rainbow underline grows out from the middle */
 .site-name, .links a, .name-link { position: relative; text-decoration: none; }
@@ -125,8 +164,8 @@ a.rainbow, a.rainbow:visited {
 @media (hover: hover) {
   .site-name:hover::after, .name-link:hover::after, .links a:hover::after { transform: scaleX(1); }
 }
-.links a[aria-current="page"] { color: #000; font-weight: bold; }
-.links a[aria-current="page"]::after { background: #000; transform: scaleX(1); }
+.links a[aria-current="page"] { color: var(--fg); font-weight: bold; }
+.links a[aria-current="page"]::after { background: var(--fg); transform: scaleX(1); }
 
 /* Page content */
 main {
@@ -153,7 +192,7 @@ h3 { font-size: 16px; margin: 14px 0 4px; }
 }
 .intro h1 { margin-top: 0; }
 .intro .tagline { margin-bottom: 0; }
-.portrait { width: 200px; height: auto; flex-shrink: 0; border: 1px solid #000; }
+.portrait { width: 200px; height: auto; flex-shrink: 0; border: 1px solid var(--fg); }
 @media (max-width: 560px) {
   .intro { gap: 16px; margin-top: 16px; }
   .intro h1 { font-size: 25px; }
@@ -175,11 +214,11 @@ main li { margin-bottom: 6px; }
 .entries li { margin-bottom: 12px; }
 .entry-title, .entry-meta, .entry-desc { display: block; }
 .entry-title { font-weight: bold; }
-.entry-meta { color: #000; font-size: 15px; }
+.entry-meta { color: var(--fg); font-size: 15px; }
 .pub-title, .pub-authors, .pub-venue { display: block; }
 .pub-title { font-weight: bold; }
-.pub-links a::before { content: "["; color: #000; }
-.pub-links a::after { content: "]"; color: #000; }
+.pub-links a::before { content: "["; color: var(--fg); }
+.pub-links a::after { content: "]"; color: var(--fg); }
 
 /* Contact links: one row, wrapping on narrow screens */
 .contact-links { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 28px; }
@@ -192,9 +231,9 @@ main li { margin-bottom: 6px; }
   grid-template-columns: repeat(2, 1fr);
   gap: 6px;
 }
-.product-photos img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; border: 1px solid #000; }
+.product-photos img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; border: 1px solid var(--fg); }
 .product-photos img:first-child { grid-column: span 2; }
-.product-photos p { grid-column: span 2; margin: 0; padding: 60px 12px; text-align: center; border: 1px dashed #808080; color: #000; }
+.product-photos p { grid-column: span 2; margin: 0; padding: 60px 12px; text-align: center; border: 1px dashed var(--rule); color: var(--fg); }
 .product-info h2 { font-size: 24px; margin-top: 0; }
 @media (max-width: 560px) {
   .product { flex-direction: column; gap: 12px; }
@@ -213,11 +252,16 @@ main li { margin-bottom: 6px; }
   h1, h2 { scroll-margin-top: 80px; }
   .contact-links { display: grid; grid-template-columns: repeat(2, max-content); gap: 10px 32px; }
   .contact-links a { display: inline-block; padding: 4px 0; }
-  .pub-authors { font-size: 14px; color: #000; }
+  .pub-authors { font-size: 14px; color: var(--fg); }
   .pub-links a { display: inline-block; padding: 4px 0; }
 }
 
-.site-footer { margin-top: 24px; font-size: 13px; color: #000; }
+.site-footer { margin-top: 24px; font-size: 13px; color: var(--fg); }
+/* The © is secretly a button that flips light/dark; the switch is instant,
+   so slow link fades don't lag behind the page */
+.theme-switching, .theme-switching * { transition: none !important; }
+.theme-toggle { all: unset; cursor: pointer; }
+.theme-toggle:focus-visible { outline: 1px dotted var(--fg); }
 /* The footer's top line is a strip of random black dither that fades in
    downward, sparse at the top and dense just above the footer text; four
    noise frames flip quickly so it sizzles. Each frame is a tiny 1-bit image
@@ -229,6 +273,7 @@ main li { margin-bottom: 6px; }
   margin-bottom: 6px;
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAAICAMAAADgI1lkAAAABlBMVEUAAAAAAAClZ7nPAAAAAnRSTlMA/1uRIrUAAAGrSURBVHjarZULbsNACER59790lcTAwLLrWOlKbWobw/xIzd4HW85w68Hh9IRdGf804Hyb32nxay8eFvLLDJ6BYVJs6gG3Or9LOGB5FVCe8hQp63tsW1UqfKfeSDS4fYq4fq2e8U2UtlALR7lBEQzuiSGWcbd7e/mMeYVhTQwF0uDSoAUn7VisL1gYsnH9cCFswom/LP0ar2QUMkBLiZamVesqkfZSwHSM0+bgw0t4gEGYNKtVOy5a2wC+i3eTGvFXoFO6+rQMrw6B5bsAaIwl56StMvIzxTfhumoKiJlUV9GdUBJqcfG4ZozFevlDpXYapAIE3oTiNSl4rRcZKR7Ja0izGgQKc0m1ZbBcLdfVV0iwt91yNESZO6+3xUl3r3w0beLa2UBeOmWpis2UQAQfSLm9KoUT2uRoYZM5oe2CeoCYKaDz0yNakkosdCZOTupe8IjiJkLIcmDSPRTQV/X/tAIJBzMgCqKAi7G+oFIiXWvjtC+1b/RSK3pbibt2tk4gHO6I1mMr+F4wXBmZlGM9DfBYNjy9R2PDE9vz5DjvXqXtPesIWkIUkySSP8nOBK6f4fIAAAAAAElFTkSuQmCC") 0 0 / 800px 16px repeat-x;
   image-rendering: pixelated;
+  filter: var(--dither); /* white dots in dark mode */
   animation: dither-sizzle 0.4s steps(1) infinite;
 }
 @keyframes dither-sizzle {
